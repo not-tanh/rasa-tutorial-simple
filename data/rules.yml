@@ -1,0 +1,7 @@
+version: "2.0"
+
+rules:
+- rule: Tạm biệt bất kì lúc nào user nói tạm biệt
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye

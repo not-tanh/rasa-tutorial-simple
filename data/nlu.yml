@@ -1,0 +1,98 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - xin chào
+    - chào
+    - chào em
+    - hey
+    - hi
+    - helu
+    - hello
+    - cốc cốc cốc
+    - hi bạn
+    - chào bạn
+    - chào bạn bot
+    - hello bạn
+    - hello bot
+- intent: affirm
+  examples: |
+    - có
+    - ừ
+    - ok
+    - okie
+    - oki
+    - oke
+    - uk
+    - uki
+    - ukie
+    - uh
+    - uhm
+    - yeah
+    - được
+    - đc
+    - cũng được
+    - ừm
+    - ừm oke
+    - ok luôn
+    - đồng ý
+    - nhất trí
+    - quyết định vậy nhé
+- intent: deny
+  examples: |
+    - không
+    - k
+    - ko
+    - không được
+    - thôi
+    - đừng
+    - k đc
+    - thôi đừng
+    - no
+    - nope
+    - không nhé
+    - không, cảm ơn
+    - thôi đủ rồi
+- intent: ask_weather
+  examples: |
+    - cho hỏi thời tiết hôm nay thế nào
+    - xem thời tiết cho tôi
+    - hôm nay nắng hay mưa
+    - hôm nay thời tiết như nào nhỉ
+    - nhiệt độ hôm nay là bao nhiêu độ
+    - check thời tiết đi
+    - thời tiết thế nào
+    - hnay có mưa không
+    - xem thời tiết
+    - xem thời tiết giúp mình với
+    - hôm nay thời tiết thế nào bạn ơi
+    - tôi muốn xem thời tiết
+- intent: ask_news
+  examples: |
+    - có tin gì đang hot không
+    - đọc tin tức cho tôi
+    - hôm nay có tin gì không
+    - báo có tin gì mới không
+    - xem tin tức
+    - em đọc tin hôm nay cho anh đi
+    - đọc báo trên mạng cho mình
+    - đọc tin nóng hổi đi
+    - xem tin
+    - hôm nay có gì hot
+    - đọc tin tức cho tôi với
+- intent: goodbye
+  examples: |
+    - chào tạm biệt
+    - bai bai
+    - bai
+    - bye
+    - bái bai
+    - bb
+    - nói chuyện sau nhé
+    - tạm biệt
+    - tạm bịt
+    - bai bot
+    - gút bai
+    - good bye
+    - baibai
+    - goodbye

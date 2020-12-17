@@ -1,0 +1,25 @@
+#### This file contains tests to evaluate that your bot behaves as expected.
+#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+stories:
+- story: hỏi thời tiết
+  steps:
+  - user: |
+      hi bạn
+    intent: greet
+  - action: utter_greet
+  - user: |
+      cho mình biết tình hình thời tiết đi
+    intent: ask_weather
+  - action: utter_weather
+
+- story: không hỏi gì
+  steps:
+  - user: |
+      xin chào bạn bot
+    intent: greet
+  - action: utter_greet
+  - user: |
+      mình không cần giúp gì cả
+    intent: deny
+  - action: utter_goodbye
