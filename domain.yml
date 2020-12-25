@@ -8,12 +8,13 @@ intents:
 - deny
 - ask_news
 - ask_weather
+- nlu_fallback
+- ask_bot_or_human
 responses:
   utter_greet:
   - text: Chào bạn, bạn cần tôi giúp gì không?
   utter_weather:
-  - text: Trời hôm nay 20 độ, nắng đẹp bạn nhé!
-  - text: Trời hôm nay lạnh và hơi âm u, nhiệt độ khoảng 13 độ.
+  - text: Hôm nay {condition}, nhiệt độ hiện tại là {degree} độ bạn nhé!
   utter_news:
   - text: Apple mới ra Airpods Max có giá $549, đắt thật.
   - text: Việt Nam đã phát triển được vắc-xin cho Covid-19 và đang trong quá trình
@@ -24,3 +25,10 @@ responses:
   - text: Bai bai!
   utter_help_something_else:
   - text: Bạn cần tôi giúp gì nữa không?
+  utter_bot_or_human:
+  - text: Tôi là chatbot, được phát triển dựa trên Rasa.
+  utter_do_not_understand:
+  - text: Xin lỗi, vì là chatbot nên có nhiều việc tôi chưa trả lời được :(
+actions:
+- action_get_weather_info
+- action_get_news

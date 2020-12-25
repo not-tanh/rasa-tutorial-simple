@@ -9,35 +9,8 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: Hỏi thời tiết
+- story: Từ chối giúp
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ask_weather
-  - action: utter_weather
   - action: utter_help_something_else
   - intent: deny
   - action: utter_goodbye
-
-- story: Hỏi tin tức
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ask_news
-  - action: utter_news
-  - action: utter_help_something_else
-  - intent: deny
-  - action: utter_goodbye
-
-- story: Hỏi thời tiết và tin tức
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: ask_weather
-    - action: utter_weather
-    - action: utter_help_something_else
-    - intent: ask_news
-    - action: utter_news
-    - action: utter_help_something_else
-    - intent: deny
-    - action: utter_goodbye

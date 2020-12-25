@@ -5,3 +5,21 @@ rules:
   steps:
   - intent: goodbye
   - action: utter_goodbye
+- rule: Trả lời bot hay người
+  steps:
+  - intent: ask_bot_or_human
+  - action: utter_bot_or_human
+- rule: Trả lời khi không hiểu user
+  steps:
+  - intent: nlu_fallback
+  - action: utter_do_not_understand
+- rule: Trả lời thời tiết
+  steps:
+  - intent: ask_weather
+  - action: action_get_weather_info
+  - action: utter_help_something_else
+- rule: Trả lời tin tức
+  steps:
+  - intent: ask_news
+  - action: action_get_news
+  - action: utter_help_something_else
