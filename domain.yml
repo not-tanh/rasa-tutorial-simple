@@ -10,15 +10,27 @@ intents:
 - ask_weather
 - nlu_fallback
 - ask_bot_or_human
+entities:
+- news_type
+slots:
+  news_type:
+    type: text
+    auto_fill: false
+    influence_conversation: false
+  location:
+    type: text
+    auto_fill: false
+    influence_conversation: false
+  requested_slot:
+    type: unfeaturized
+    influence_conversation: false
 responses:
   utter_greet:
-  - text: Chào bạn, bạn cần tôi giúp gì không?
+  - text: Chào bạn
+  - text: Xin chào
+  - text: Hi bạn
   utter_weather:
-  - text: Hôm nay {condition}, nhiệt độ hiện tại là {degree} độ bạn nhé!
-  utter_news:
-  - text: Apple mới ra Airpods Max có giá $549, đắt thật.
-  - text: Việt Nam đã phát triển được vắc-xin cho Covid-19 và đang trong quá trình
-      tiến hành thử nghiệm.
+  - text: Hôm nay {location} {condition}, nhiệt độ hiện tại là {degree} độ bạn nhé!
   utter_goodbye:
   - text: Chào tạm biệt nhé!
   - text: Tạm biệt!
@@ -29,6 +41,19 @@ responses:
   - text: Tôi là chatbot, được phát triển dựa trên Rasa.
   utter_do_not_understand:
   - text: Xin lỗi, vì là chatbot nên có nhiều việc tôi chưa trả lời được :(
+  utter_ask_location:
+  - text: Bạn muốn xem thời tiết ở thành phố nào nhỉ?
+  utter_ask_news_type:
+  - text: Bạn muốn xem tin tức về vấn đề gì?
 actions:
 - action_get_weather_info
 - action_get_news
+forms:
+  location_form:
+    location:
+    - entity: LOC
+      type: from_entity
+  news_type_form:
+    news_type:
+    - entity: news_type
+      type: from_entity

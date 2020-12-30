@@ -1,0 +1,14 @@
+version: "2.0"
+nlu:
+  - lookup: news_type
+    examples: |
+      - thế giới
+      - kinh doanh
+      - giải trí
+      - thể thao
+      - pháp luật
+      - giáo dục
+      - sức khỏe
+      - đời sống
+      - du lịch
+      - khoa học

@@ -14,20 +14,6 @@ from rasa_sdk.executor import CollectingDispatcher
 import requests
 from bs4 import BeautifulSoup
 
-
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
-
 google_url = 'https://www.google.com.vn/search'
 news_url = 'https://vnexpress.net/'
 headers = {
@@ -35,6 +21,18 @@ headers = {
                   'AppleWebKit/537.36 (KHTML, like Gecko) '
                   'Chrome/64.0.3282.186 '
                   'Safari/537.36'
+}
+news_type_to_path = {
+    'thế giới': 'the-gioi',
+    'kinh doanh': 'kinh-doanh',
+    'giải trí': 'giai-tri',
+    'thể thao': 'the-thao',
+    'pháp luật': 'phap-luat',
+    'giáo dục': 'giao-duc',
+    'sức khỏe': 'suc-khoe',
+    'đời sống': 'doi-song',
+    'du lịch': 'du-lich',
+    'khoa học': 'khoa-hoc'
 }
 
 
@@ -56,9 +54,35 @@ class ActionGetWeatherInfo(Action):
             return condition.lower(), degree.text.strip()
         return '', ''
 
+    @staticmethod
+    def get_weather_in_location(locations):
+        # Returns list of weather conditions, degrees and location
+        results = []
+        if type(locations) is str:
+            locations = [locations]
+        locations = set(locations)
+        for location in locations:
+            r = requests.get(google_url,
+                             params={'q': 'thời tiết ở %s' % location, 'cr': 'countryVN', 'lr': 'lang_vi', 'hl': 'vi'},
+                             headers=headers)
+            soup = BeautifulSoup(r.text, 'lxml')
+            weather_box = soup.find('div', {'id': 'wob_dcp'})
+            if weather_box:
+                degree = soup.find('span', {'id': 'wob_tm'})
+                condition = weather_box.text
+                results.append((condition.lower(), degree.text.strip(), location))
+        return results
+
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]):
-        condition, degree = self.get_weather()
-        dispatcher.utter_message(template='utter_weather', condition=condition, degree=degree)
+        locations = tracker.get_slot('location')
+        results = self.get_weather_in_location(locations)
+        if results:
+            for condition, degree, location in results:
+
+                dispatcher.utter_message(template='utter_weather',
+                                         condition=condition, degree=degree, location=location)
+        else:
+            dispatcher.utter_message(text='Xin lỗi bạn, mình không tìm thấy thông tin')
         # This also works
         # dispatcher.utter_message(text="Hôm nay {condition}, nhiệt độ hiện tại là {degree} độ bạn nhé!")
 
@@ -75,11 +99,40 @@ class ActionGetNews(Action):
         top_story_article = soup.find('article', {'class': 'article-topstory'})
         title = top_story_article.find('h3', {'class': 'title-news'}).text.strip()
         desc = top_story_article.find('p', {'class': 'description'}).text
-        location_stamp = top_story_article.find('span', {'class': 'location-stamp'}).text.strip()
-        # Delete location stamp in description
+        location_stamp = top_story_article.find('span', {'class': 'location-stamp'})
+        location_stamp = location_stamp.text.strip() if location_stamp else ''
+        # Delete location stamp in description (if any)
         desc = desc.replace(location_stamp, '', 1).strip()
         return '%s\n%s' % (title, desc)
 
+    @staticmethod
+    def get_news_by_type(news_types):
+        # Returns top story in vnexpress
+        results = []
+        if type(news_types) is str:
+            news_types = [news_types]
+        news_types = set(news_types)
+        for news_type in news_types:
+            news_path = news_type_to_path.get(news_type, '')
+            if not news_path:
+                continue
+            r = requests.get(news_url + news_path, headers=headers)
+            soup = BeautifulSoup(r.text, 'lxml')
+            top_story_article = soup.find('article', {'class': 'article-topstory'})
+            title = top_story_article.find('h3', {'class': 'title-news'}).text.strip()
+            desc = top_story_article.find('p', {'class': 'description'}).text
+            location_stamp = top_story_article.find('span', {'class': 'location-stamp'})
+            location_stamp = location_stamp.text.strip() if location_stamp else ''
+            # Delete location stamp in description (if any)
+            desc = desc.replace(location_stamp, '', 1).strip()
+            results.append('Tin %s:\n%s\n%s' % (news_type.lower(), title, desc))
+        return results
+
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]):
-        news = self.get_news()
-        dispatcher.utter_message(text=news)
+        news_types = tracker.get_slot('news_type')
+        news_list = self.get_news_by_type(news_types)
+        if news_list:
+            for news in news_list:
+                dispatcher.utter_message(text=news)
+        else:
+            dispatcher.utter_message(text='Xin lỗi bạn, mình không tìm thấy thông tin')

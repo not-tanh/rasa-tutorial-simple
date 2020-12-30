@@ -13,13 +13,35 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_do_not_understand
-- rule: Trả lời thời tiết
+- rule: Form thời tiết
   steps:
   - intent: ask_weather
+  - action: location_form
+  - active_loop: location_form
+- rule: Submit form thời tiết
+  condition:
+  - active_loop: location_form
+  steps:
+  # Form is deactivated
+  - action: location_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: location
+  # The actions we want to run when the form is submitted.
   - action: action_get_weather_info
   - action: utter_help_something_else
-- rule: Trả lời tin tức
+- rule: Form tin tức
   steps:
   - intent: ask_news
+  - action: news_type_form
+  - active_loop: news_type_form
+- rule: Submit form tin tức
+  condition:
+    - active_loop: news_type_form
+  steps:
+  - action: news_type_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: news_type
   - action: action_get_news
   - action: utter_help_something_else
