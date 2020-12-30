@@ -44,7 +44,6 @@ class NamedEntityRecognition(Component):
         if 'text' in message.data:
             tokens = underthesea.ner(message.data['text'])
             entities = self.convert_to_rasa(tokens)
-            print('Returned entities:', entities)
             message.set("entities", entities, add_to_output=True)
 
     def persist(self, file_name, dir_name, **kwargs):

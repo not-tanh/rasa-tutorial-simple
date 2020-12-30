@@ -11,7 +11,14 @@ stories:
   - user: |
       cho mình biết tình hình thời tiết đi
     intent: ask_weather
-  - action: utter_weather
+  - action: location_form
+  - active_loop: location_form
+  - user: |
+      anh ở [Đà Nẵng](location)
+  - action: location_form
+  - active_loop: null
+  - action: action_get_weather_info
+  - action: utter_help_something_else
 
 - story: không hỏi gì
   steps:
