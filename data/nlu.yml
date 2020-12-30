@@ -96,3 +96,17 @@ nlu:
     - good bye
     - baibai
     - goodbye
+- intent: ask_bot_or_human
+  examples: |
+    - bạn là người hay bot thế
+    - tôi đang nói chuyện với người à
+    - có phải mình đang nói chuyện với bot không
+    - cậu là bot đúng k
+    - bạn là người thật hả
+    - mình đang chat với người hay bot
+    - chatbot à
+    - bot à
+    - bạn là người hay là chat bot thế
+    - bạn là người hay bot
+    - bạn là người thật hay là chatbot thế
+    - bạn là người hay bot zạ

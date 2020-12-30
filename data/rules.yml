@@ -1,7 +1,10 @@
 version: "2.0"
-
 rules:
 - rule: Tạm biệt bất kì lúc nào user nói tạm biệt
   steps:
   - intent: goodbye
   - action: utter_goodbye
+- rule: Trả lời bot hay người
+  steps:
+  - intent: ask_bot_or_human
+  - action: utter_bot_or_human

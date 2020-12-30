@@ -8,6 +8,7 @@ intents:
 - deny
 - ask_news
 - ask_weather
+- ask_bot_or_human
 responses:
   utter_greet:
   - text: Chào bạn, bạn cần tôi giúp gì không?
@@ -24,3 +25,5 @@ responses:
   - text: Bai bai!
   utter_help_something_else:
   - text: Bạn cần tôi giúp gì nữa không?
+  utter_bot_or_human:
+  - text: Tôi là chatbot, được phát triển dựa trên Rasa.
