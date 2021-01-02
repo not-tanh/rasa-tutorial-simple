@@ -16,11 +16,11 @@ slots:
   news_type:
     type: text
     auto_fill: false
-    influence_conversation: false
+    influence_conversation: true
   location:
     type: text
     auto_fill: false
-    influence_conversation: false
+    influence_conversation: true
   requested_slot:
     type: unfeaturized
     influence_conversation: false
